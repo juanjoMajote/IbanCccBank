@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+    db_postgress:
+      image: postgres:latest
+      environment:
+         - POSTGRES_USER=prueba
+         - POSTGRES_PASSWORD=postgress
+         - POSTGRES_DB=bbddibam
+      volumes:
+         - db-data1:/var/lib/postgresql/data
+      networks:
+         - dbs
+    djangoiban:
+      image: djangoiban:latest
+      ports:
+        - "8000:8000"
+      networks:
+        - dbs
+      environment:
+        - DJANGO_SUPER_USER=juanjo2 
+        - DJANGO_PASS=prueba  
+        - DJANGO_EMAIL=juanjo2.majote@gmail.com
+      depends_on:
+        - db_postgress
+
+volumes:
+  db-data1:
+
+networks:
+  dbs:

@@ -1,0 +1,73 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    {% if not request.user.is_authenticated %}
+      <script>window.location.href = '/accounts/login/'; </script>
+    {% endif %}
+{% include "core/top_navigation.html" %}
+{% include "core/_modal.html" %}
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <button class="create-client btn btn-primary" type="button" name="button">
+              <i class="fas fa-user-plus"></i></button>
+          </div>
+          <div class="col-12 mb-3">
+            {% if clients %}
+            {% include "userBank/tableClient.html"%}
+            <div class="col-md-12 text-center">
+                <ul class="pagination pagination-lg pager" id="developer_page"></ul>
+            </div>
+            {% else %}
+              <p class="no-clients text-primary">No Clients added yet.</p>
+            {% endif %}
+             {{user.permission}}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block extrascripts %}
+  <script type="text/javascript">
+  $(document).ready(function() {
+$('#developers').pageMe({
+pagerSelector: '#developer_page',
+showPrevNext: true,
+hidePageNumbers: false,
+perPage: 3
+});
+});
+    $(function () {
+
+      // Create client button
+      $(".create-client").modalForm({formURL: "{% url 'create_client' %}"});
+
+      // Update client buttons
+      $(".update-client").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      });
+
+      // Read client buttons
+      $(".read-client").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      });
+
+      // Delete client buttons
+      $(".delete-client").each(function () {
+        $(this).modalForm({formURL: $(this).data('id')});
+      })
+
+      // Hide message
+      $(".alert").fadeTo(2000, 500).slideUp(500, function(){
+        $(".alert").slideUp(500);
+      });
+
+    });
+  </script>
+{% endblock extrascripts %}

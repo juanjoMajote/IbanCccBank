@@ -1,0 +1,110 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    {% if not request.user.is_authenticated %}
+      <script>window.location.href = '/accounts/login/'; </script>
+    {% endif %}
+{% include "core/top_navigation.html" %}
+{% include "core/_modal.html" %}
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col">
+        <div class="row">
+          <div class="col-12 mb-3">
+            <div class="form-group">
+                <label for="usr">Username:</label>
+                <input type="text" class="form-control" id="usr" value="{{object.username}}" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <div class="form-group">
+                <label for="firstname">FirstName:</label>
+                <input type="text" class="form-control" id="firstname" value="{{object.first_name}}" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <div class="form-group">
+                <label for="lastname">LastName:</label>
+                <input type="text" class="form-control" id="lastname" value="{{object.last_name}}" disabled>
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" value="{{object.email}}" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <div class="form-group">
+                <label for="dateJoin">Date Joined:</label>
+                <input type="text" class="form-control" id="dateJoin" value="{{object.date_joined}}" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+              <div class="form-group">
+                <label for="last_login">Last Login:</label>
+                <input type="text" class="form-control" id="last_login" value="{{object.last_login}}" disabled>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    {% if object.is_staff %}
+                     <input type="checkbox" class="form-check-input mr+20" value="" checked disabled>
+                    {% else %}
+                    <input type="checkbox" class="form-check-input" value="" disabled>
+                    {%endif%}
+                  Is Staff
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    {% if object.is_superuser %}
+                     <input type="checkbox" class="form-check-input mr+20" value="" checked disabled>
+                    {% else %}
+                    <input type="checkbox" class="form-check-input" value="" disabled>
+                    {%endif%}
+                  Is Superuser
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-label">
+                    {% if object.is_active %}
+                     <input type="checkbox" class="form-check-input mr+20" value="" checked disabled>
+                    {% else %}
+                    <input type="checkbox" class="form-check-input" value="" disabled>
+                    {%endif%}
+                  Is Active
+                </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mb-3">
+              <div class="d-flex justify-content-between">
+                  <div>
+                  <a class="btn btn-outline-primary" href="{% url 'password_change' %}">Change Password</a>
+                  </div>
+                  <div>
+                  <a class="btn btn-outline-primary" href="{% url 'index' %}">Volver</a>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

@@ -1,0 +1,30 @@
+
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+    <a href="{% url 'index' %}" class="navbar-brand">UserBank</a>
+    <a>User: {{user.first_name}} {{user.last_name}}</a>
+    <div class="collapse navbar-collapse" id="navbarsuperior">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" id="navbardrop" data-toggle="dropdown">
+              <i class="fas fa-user mr-2"></i> Profile   </a>
+            <div class="dropdown-menu dropdown-menu-right float-right">
+                <a class="dropdown-item" href="{% url 'read_user' user.id %}"}><i class="fas fa-id-card mr-2"></i>My account</a>
+                <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt mr-2"></i>Log out</a>
+                <h5 class="dropdown-header">Social Login</h5>
+                {% if user.social_auth.all%}
+                    {% for social in user.social_auth.all %}
+                         {% if social.provider == "google-oauth2"%}
+                            <form id=google_out method="post" action="{% url 'social:disconnect' 'google-oauth2' %}">
+                            {% csrf_token %}
+                                <a class="dropdown-item" href="javascript:void()" onclick="document.getElementById('google_out').submit();"><i class="fab fa-google-plus-g mr-2"></i>SingOut</a>
+                            </form>
+                         {% endif%}
+                    {% endfor %}
+                {% else%}
+                    <a class="dropdown-item" href="{% url 'social:begin' 'google-oauth2' %}"><i class="fab fa-google-plus-g mr-2"></i>SingUp</a>
+                {% endif%}
+            </div>
+          </li>
+        </ul>
+    </div>
+</nav>
